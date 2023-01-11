@@ -1,0 +1,71 @@
+extends layout
+
+block content
+  h1= title
+
+  if !currentUser
+    p Welcome to #{title}
+
+
+  if !currentUser
+    .modal  
+      p Already have an account?
+      form(action="", method="post")
+        label(for="username") Username:
+        input#username(type="text", name="username")
+        label(for="password") Password:
+        input#password(type="password", name="password")
+
+        if errors
+          ul 
+            each error in errors
+              li.error=error
+
+        button(type="submit") Login
+
+      
+
+    p 
+      a(href="/sign-up") Sign Up
+  
+
+  else 
+
+    p.logged-in You are logged in as 
+      span.bold #{currentUser.username}
+
+    if currentUser.isMember 
+      p You are a member of this club! 
+    else 
+      
+      p 
+        a(href="join-club") Become Member!   
+
+    if currentUser.isAdmin 
+      p You are admin on this site!
+    else
+      p 
+        a(href="/become-admin") Become Admin! 
+
+    p.create-message 
+      a(href="create-message") Create Message
+    
+block messages 
+  .message-container 
+    .message-wrapper
+      h3.messages-heading Messages
+      each message in messages
+        .message
+          p.title=message.title 
+          p.text=message.text
+            if currentUser 
+
+              if currentUser.isMember || currentUser.isAdmin
+                p Author: #{message.createdBy.username} 
+                p Added: #{message.formatted_date}
+
+              if currentUser.isAdmin
+                form(action="/delete-message", method="post") 
+                  input(type="hidden" value=message.id name="messageid")
+                  button.delete-message(type="submit") Delete 
+            

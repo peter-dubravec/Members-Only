@@ -1,0 +1,16 @@
+extends layout 
+
+block content 
+    h2=title 
+    p Do you want to become admin? Enter passphrase
+
+    .become-admin
+        form(action="", method="post") 
+            label(for="password") Password: 
+            input#password(type="password", name="password")
+
+            if error
+                ul 
+                    li.error=error
+
+            button(type="submit") Submit

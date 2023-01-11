@@ -1,0 +1,16 @@
+extends layout 
+
+block content
+    h1 Join club
+
+    .join-club
+        form(action="", method="post")
+            label(for="password") Enter Secret Password to become member:
+            input#password(type="password", name="password") 
+
+            if error
+                ul
+                    li.error=error
+
+            button(type="submit") Enter
+        

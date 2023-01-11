@@ -1,0 +1,13 @@
+doctype html
+html
+  head
+    title= title
+    link(rel='stylesheet', href='/stylesheets/style.css')
+    script(src="/javascripts/index.js" defer) 
+  body
+    if currentUser
+      p  
+        a.log-out(href="/log-out") log out
+    block content
+
+    block messages
